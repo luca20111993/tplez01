@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Lezione_29_11_16Gioco_Carte;
+package Lezione_29_11_16Gioco_Carte.GiocoCarte_Mio;
 
 import java.util.ArrayList;
 
