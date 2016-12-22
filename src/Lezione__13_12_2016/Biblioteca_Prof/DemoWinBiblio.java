@@ -7,6 +7,7 @@ package Lezione__13_12_2016.Biblioteca_Prof;
 
 import java.util.Date;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,6 +35,7 @@ public class DemoWinBiblio extends javax.swing.JFrame {
         refreshLibri();
         refreshClienti();
         refreshPrestiti();
+
     }
 
     private void refreshLibri() {
@@ -42,6 +44,17 @@ public class DemoWinBiblio extends javax.swing.JFrame {
             modelLibri.addElement(l.getInfo());
         }
         jLibri.setModel(modelLibri);
+
+    }
+
+    private void refreshPrestiti() {
+        modelPrestiti = new DefaultListModel();
+        for (Prestito p : bib.getElencoPrestiti()) {
+            if (p.getDataRestituzione() == "") {
+                modelPrestiti.addElement(p.getNote());
+            }
+        }
+        jPrestiti.setModel(modelPrestiti);
 
     }
 
@@ -54,17 +67,6 @@ public class DemoWinBiblio extends javax.swing.JFrame {
 
     }
 
-    
-    private void refreshPrestiti() {
-        modelPrestiti = new DefaultListModel();
-        for (Prestito p : bib.getElencoPrestiti()) {
-            modelPrestiti.addElement(p.getNote());
-        }
-        jPrestiti.setModel(modelPrestiti);
-
-    }
-
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,7 +77,6 @@ public class DemoWinBiblio extends javax.swing.JFrame {
     private void initComponents() {
 
         jlTitoloWin = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jtTitolo = new javax.swing.JTextField();
@@ -86,14 +87,19 @@ public class DemoWinBiblio extends javax.swing.JFrame {
         jtMsgLibri = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         jLibri = new javax.swing.JList<>();
-        jbDeLibro = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jClienti = new javax.swing.JList<>();
+        jbdellibro = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jPrestiti = new javax.swing.JList<>();
-        jbAddNewPrestito = new javax.swing.JButton();
+        jbAddnewPrestito = new javax.swing.JButton();
+        jBreso = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jClienti = new javax.swing.JList<>();
+        jtcog = new javax.swing.JTextField();
+        jtnom = new javax.swing.JTextField();
+        jbaddcliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Bibliteca Demo");
@@ -102,17 +108,6 @@ public class DemoWinBiblio extends javax.swing.JFrame {
         jlTitoloWin.setBackground(new java.awt.Color(255, 0, 204));
         jlTitoloWin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlTitoloWin.setText("Form gestione Biblioteca");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
 
         jLabel1.setText("Titolo");
 
@@ -154,12 +149,60 @@ public class DemoWinBiblio extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jLibri);
 
-        jbDeLibro.setText("Del Libro Selez");
-        jbDeLibro.addActionListener(new java.awt.event.ActionListener() {
+        jbdellibro.setText("Del Libro Sel.");
+        jbdellibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbDeLibroActionPerformed(evt);
+                jbdellibroActionPerformed(evt);
             }
         });
+
+        jPrestiti.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(jPrestiti);
+
+        jbAddnewPrestito.setText("add new Prestito");
+        jbAddnewPrestito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAddnewPrestitoActionPerformed(evt);
+            }
+        });
+
+        jBreso.setText("reso libro");
+        jBreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBresoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jBreso)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbAddnewPrestito)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBreso)
+                    .addComponent(jbAddnewPrestito)))
+        );
+
+        jLabel3.setText("messaggi");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -168,20 +211,28 @@ public class DemoWinBiblio extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbdellibro, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(375, 375, 375))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtTitolo)
-                            .addComponent(jtAutore)
-                            .addComponent(jbaddlibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbDeLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jtAutore, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jbaddlibro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+                                    .addComponent(jtTitolo)))
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -197,16 +248,17 @@ public class DemoWinBiblio extends javax.swing.JFrame {
                     .addComponent(jtAutore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbaddlibro)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(3, 3, 3)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jbDeLibro)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbdellibro))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jClienti.setModel(new javax.swing.AbstractListModel<String>() {
@@ -216,87 +268,72 @@ public class DemoWinBiblio extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jClienti);
 
+        jtcog.setToolTipText("ins cog");
+
+        jtnom.setToolTipText("ins nome");
+
+        jbaddcliente.setText("ins cliente");
+        jbaddcliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbaddclienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 255, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jtnom, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                    .addComponent(jtcog)
+                    .addComponent(jbaddcliente))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
-        );
-
-        jPrestiti.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane4.setViewportView(jPrestiti);
-
-        jbAddNewPrestito.setText("Add New Prestito");
-        jbAddNewPrestito.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbAddNewPrestitoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jbAddNewPrestito)
-                .addGap(0, 220, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbAddNewPrestito)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jtcog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtnom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbaddcliente)))
+                .addContainerGap(348, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlTitoloWin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jlTitoloWin, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
+                        .addGap(56, 56, 56))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jlTitoloWin)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlTitoloWin)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 29, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -323,45 +360,81 @@ public class DemoWinBiblio extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jbaddlibroActionPerformed
 
-    private void jbDeLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeLibroActionPerformed
+    private void jbdellibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbdellibroActionPerformed
         // TODO add your handling code here:
         int index = jLibri.getSelectedIndex();
         String ris = dip.removeLibroByIndex(index, bib);
         jtMsgLibri.setText(ris);
         refreshLibri();
-
-    }//GEN-LAST:event_jbDeLibroActionPerformed
+    }//GEN-LAST:event_jbdellibroActionPerformed
 
     private void jLibriValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLibriValueChanged
-        // TODO add your handling code here:ù
+        // TODO add your handling code here:
         String ris = "";
         ris = jLibri.getSelectedValue();
         jtMsgLibri.setText(ris);
 
-
     }//GEN-LAST:event_jLibriValueChanged
 
-    private void jbAddNewPrestitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddNewPrestitoActionPerformed
+    private void jbAddnewPrestitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddnewPrestitoActionPerformed
         // TODO add your handling code here:
-        int indexcliente = jClienti.getSelectedIndex();
+
+        int indexCliente = jClienti.getSelectedIndex();
         int indexLibro = jLibri.getSelectedIndex();
-        
-        indexcliente = bib.getElencoClienti().get(indexcliente).getCodCliente();
+        indexCliente = bib.getElencoClienti().get(indexCliente).getCodCliente();
         indexLibro = bib.getElencoLibri().get(indexLibro).getCodLibro();
-        dip.addNewPrestito(indexcliente, indexLibro,jClienti.getSelectedValue() + " - " + jLibri.getSelectedValue() , bib);
+
+        if (bib.isDisponibile(indexLibro) && !bib.isClienteLimiteMax(indexCliente)) {
+            //vincolata alla disponibilita' del libro e cliente non moroso
+            dip.addNewPrestito(indexCliente, indexLibro, jClienti.getSelectedValue() + " - " + jLibri.getSelectedValue(), bib);
+            refreshPrestiti();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Libro gia' in prestito o cliente al limite dei prestiti");
+        }
+
+
+    }//GEN-LAST:event_jbAddnewPrestitoActionPerformed
+
+    private void jBresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBresoActionPerformed
+
+        // TODO add your handling code here:
+        //index del prestito selezionato nella lista prestiti
+        
+        int index = jPrestiti.getSelectedIndex();
+        //il dipendente segna rerstituito sulla scheda prestito
+        if (index == -1) {
+            return;
+        }
+        String cod=jPrestiti.getSelectedValue();
+        // es "[12] guerrini hobbit"
+        int  posquadrachiusa=cod.indexOf("]");
+        cod=cod.substring(1, posquadrachiusa);
+        index=Integer.parseInt(cod);
+        dip.resoPrestito(index, bib);
         refreshPrestiti();
+
+    }//GEN-LAST:event_jBresoActionPerformed
+
+    private void jbaddclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbaddclienteActionPerformed
+        // TODO add your handling code here:
         
-        
-        
-    }//GEN-LAST:event_jbAddNewPrestitoActionPerformed
+              String ris;
+        ris = dip.addNewCliente(jtcog.getText(), jtnom.getText(), bib);
+        jtMsgLibri.setText(ris);
+        refreshClienti();
+        jtcog.setText("");
+        jtnom.setText("");  
+    }//GEN-LAST:event_jbaddclienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBreso;
     private javax.swing.JList<String> jClienti;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JList<String> jLibri;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -370,12 +443,15 @@ public class DemoWinBiblio extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JButton jbAddNewPrestito;
-    private javax.swing.JButton jbDeLibro;
+    private javax.swing.JButton jbAddnewPrestito;
+    private javax.swing.JButton jbaddcliente;
     private javax.swing.JButton jbaddlibro;
+    private javax.swing.JButton jbdellibro;
     private javax.swing.JLabel jlTitoloWin;
     private javax.swing.JTextField jtAutore;
     private javax.swing.JTextArea jtMsgLibri;
     private javax.swing.JTextField jtTitolo;
+    private javax.swing.JTextField jtcog;
+    private javax.swing.JTextField jtnom;
     // End of variables declaration//GEN-END:variables
 }

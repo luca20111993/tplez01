@@ -12,18 +12,16 @@ import java.util.Date;
  * @author tss
  */
 public class Prestito {
-
     int codCliente;
     int codLibro;
     String dataPrestito = new Date().toString();
-    String dataRestituzione = "";
-    boolean reso = false;
+    String dataRestituzione="";
+    boolean reso=false;
     String note;
-    
-    public Prestito(int codCliente, int codLibro , String note) {
+    public Prestito(int codCliente, int codLibro,String note) {
         this.codCliente = codCliente;
         this.codLibro = codLibro;
-        this.note = note;
+        this.note=note;
     }
 
     public void setDataRestituzione(String dataRestituzione) {
@@ -32,6 +30,10 @@ public class Prestito {
 
     public void setReso(boolean reso) {
         this.reso = reso;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public int getCodCliente() {
@@ -57,8 +59,5 @@ public class Prestito {
     public String getNote() {
         return note;
     }
-    
-     
-
     
 }

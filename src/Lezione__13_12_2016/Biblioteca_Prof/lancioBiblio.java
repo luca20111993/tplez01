@@ -20,13 +20,11 @@ public class lancioBiblio {
     public static void main(String[] args) {
         // TODO code application logic here
         Biblioteca bib = new Biblioteca("Biblio Ivrea", "via ottinetti 2, Ivrea");
-        
         Cliente c1;
-        c1 = new Cliente("Verdi", "Joseph", 1);
+        c1= new Cliente("verdi", "joseph",1);
         bib.getElencoClienti().add(c1);
-        c1 = new Cliente("Rossini", "Jacques", 2);
+        c1= new Cliente("Rossini", "jacques",2);
         bib.getElencoClienti().add(c1);
-        
         Dipendente d1;
         d1= new Dipendente("rossi", "mario", "bibliotecario");
         bib.getElencoDipendenti().add(d1);
@@ -35,15 +33,17 @@ public class lancioBiblio {
         d1.addNewLibro("il signore degli anelli", "tolkien", bib);
         Libro l2 = new Libro("lo hobbit", "tolkien", 2);
         bib.getElencoLibri().add(l2);
-        
-        //JOptionPane.showMessageDialog(null, bib.getSchedario());
-
-        Prestito p = new Prestito(1 , 1 , "Verdi - signore degli anelli " + new Date().toString());
+        Prestito p;
+        p=new Prestito(1,1,"[0] verdi demo- signore anelli " + new Date().toString());
         bib.getElencoPrestiti().add(p);
-        Prestito p1 = new Prestito(2 , 2 , "Rossini - Hobbit " + new Date().toString());
-        bib.getElencoPrestiti().add(p1);
+        p=new Prestito(2,2,"[1] rossini demo - hobbit " + new Date().toString());
+        bib.getElencoPrestiti().add(p);
+        System.out.println(bib.isDisponibile(1));
         
         
+
+
+//JOptionPane.showMessageDialog(null, bib.getSchedario());
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
